@@ -78,7 +78,7 @@ class HomeController extends Controller
         
         if(Hash::check($req->old_pass, Auth::user()->password)){
             
-            $user = Auth::user(); 
+            $user = User::find(Auth::user()->id); 
             $user->password = Hash::make($req->new_pass);
             $user->save();
             return back()->with('message','Password Changed Successfully!');
