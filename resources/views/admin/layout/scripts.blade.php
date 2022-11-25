@@ -24,6 +24,7 @@
 {{-- data table --}}
 
 
+
 <!-- Sweet Alerts js -->
 <script src="{{ asset('admin/assets/libs/sweetalert2/sweetalert2.all.min.js') }}"></script>
 
