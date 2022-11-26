@@ -32,7 +32,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return redirect()->route('dashboard');
+        return redirect()->route('web.index');
     }
 
     public function dashboard()

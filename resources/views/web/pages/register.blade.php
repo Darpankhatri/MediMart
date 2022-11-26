@@ -1,8 +1,12 @@
+<?php $favicon = App\Models\logo::where('name', 'favicon')
+    ->where('is_active', 1)
+    ->first();
+?>
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title> Home </title>
+    <title> Register | Graphical Validator </title>
     <meta charset="UTF-8">
     <meta name="keywords" content="HTML, CSS, JavaScript">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +15,7 @@
     <link href="{{ asset('web/css/bootstrap.min.css.map') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('web/css/animate.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <link rel="icon" href="{{ asset('web/images/fav-icon.png') }}" type="image/png" sizes="">
+    <link rel="icon" href="{{ asset($favicon->image) }}" type="image/png" sizes="">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.css">
     <link rel="stylesheet" href="{{ asset('web/css/owl.carousel.min.css') }}">
@@ -24,7 +28,14 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <!-- Sweet Alert-->
     <link href="{{ asset('admin/assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
-
+    <style>
+        
+        .danger-msg {
+            color: red;
+            font-weight: bold;
+            display: flow-root;
+        }
+    </style>
 
     <!--=============== scripts  ===============-->
     <script src="{{ asset('web/js/jquery-3.6.0.min.js') }}"></script>
@@ -54,16 +65,30 @@
         <div class="container">
             <div class="wrapper">
                 <h1>Register</h1>
-                <p>Welcome back you've <br> been missed!</p>
+                <p>Welcome to graphical <br> Verification</p>
                 <form id="register-form" action="{{ route('user.register') }}" method="post">
-                    <input type="name" placeholder="Enter Your Name" required>
-                    <input type="email" placeholder="Enter Your Email" required>
-                    <input type="password" placeholder="Password" autocomplete="" required>
+                    @csrf
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <input type="name" placeholder="Enter Your Name" name="name" value="{{ old('name') }}" required>
+                    
+                    <input type="email" placeholder="Enter Your Email" name="email" value="{{ old('email') }}" required>
+                    
+                    <input type="password" placeholder="Password" name="password" autocomplete="" required>
+                    
                     <div class="recover">
                         <i class="fas fa-sync-alt reset-set"></i>
                     </div>
                     
-                    <input id="channels-list-container" type="text" />
+                    <input id="channels-list-container" name="color_validation" type="text" />
+                    <input type="hidden" name="key_cnt" id="key_cnt"/>
                     <div class="slect-options">
                         <ul>
                             <!-- opacity ki class h ye "cl-op" -->
@@ -80,7 +105,7 @@
 
 
                 <div class="not-member">
-                    Not a member?
+                    Already have Account?
                     <a href="{{ route('web.login') }}">Login</a>
                 </div>
             </div>
@@ -97,8 +122,9 @@
 
             $(document).on('keydown', function(event) {
                 // Check if timer is already running.
+                
                 if (timer !== null) return;
-
+                
                 // Start new timer.
                 timer = window.setInterval(function() {
                     // Trigger longKeyPress event on the currently selected element when the timer finishes.
@@ -109,6 +135,7 @@
                         which: event.which
                     });
                 }, duration);
+                
             });
 
             $(document).on('keyup', function(event) {
@@ -125,14 +152,18 @@
             // Bind to custom longKeyPress event.
             $('#channels-list-container').on('longKeyPress', function(event) {
                 if (event.key === "Enter") {
-                    console.log('Long [Enter] key press detected on targeted element!');
+                    // console.log('Long [Enter] key press detected on targeted element!');
+                    
+                    
                     key_cnt += 1;
                 }
             });
         })();
     </script>
+
+
     <script>
-        var col_cnt = ['','','','','',''];
+        var col_cnt = [0,0,0,0,0,0];
         var msg = 'Fill All Required Fields';
         function isEmail(email) {
             var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -147,7 +178,7 @@
                 cur_class = parseInt(cur_class.replace('col', '')) - 1;
                 col_cnt[cur_class]= 1;
                 
-                console.log(col_cnt,cur_class,key_cnt);
+                // console.log(col_cnt,cur_class,key_cnt);
                 // console.log($(this).find('i').length);
 
 
@@ -160,6 +191,7 @@
 
         $(document).on('click','#register-from-btn',function() {
             var has_error = 0;
+            $('#key_cnt').val(key_cnt);
             $('#register-form').find('input').each(function( index ) {
                 if($(this).attr('id')!='channels-list-container' && $(this).val() == ''){
                     has_error +=1;
@@ -200,7 +232,7 @@
                         }
                     }
                     
-                    if(lo_col_cnt>=3){
+                    if(lo_col_cnt>3){
                         msg = 'Color Validation Failed!';
                         has_error += 1;
 
@@ -209,13 +241,16 @@
             }
 
             if(has_error){
+                $('#key_cnt').val('');
                 Swal.fire({
                     icon: 'error',
                     title: msg,
                 })
             }
             else{
-                toastr.success("Success");
+                $('#channels-list-container').val(col_cnt);
+                $('#register-form').submit();
+                // toastr.success("Success");
             }
         });
 
@@ -236,14 +271,24 @@
                         "debug": false,
                         "positionClass": "toast-bottom-right",
                     }
-                    col_cnt = ['','','','','',''];
+                    col_cnt = [0,0,0,0,0,0];
                     key_cnt = 0;
                     $('#channels-list-container').val('');
                     $('.slect-options').html(response.body);
                     toastr.success('Validation Reset');
                 }
             });
-        })
+        });
+
+        @if (Session::has('error'))
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "debug": false,
+                "positionClass": "toast-bottom-right",
+            }
+            toastr.error("{{ session('error') }}");
+        @endif
     </script>
 </body>
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 25, 2022 at 09:53 PM
+-- Generation Time: Nov 26, 2022 at 11:35 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -168,11 +168,13 @@ CREATE TABLE `users` (
   `phone` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `address` varchar(512) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `dob` date DEFAULT NULL,
-  `role_id` int(11) NOT NULL DEFAULT 3,
+  `role_id` int(11) NOT NULL DEFAULT 1,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `secret_key` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_active` tinyint(4) NOT NULL DEFAULT 0,
+  `is_deleted` tinyint(4) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -181,8 +183,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `image`, `gender`, `phone`, `address`, `dob`, `role_id`, `email_verified_at`, `password`, `secret_key`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'admin@project.com', 'admin/assets/uploads/user/1659302696_1661179218.jpg', 'male', '(315) 253-5157', 'address', '2001-06-14', 1, NULL, '$2y$10$bWIihWLmugzT/wVvmBhZUOFhP3XuPubKwO6PdYIhzlcZQWqms/Fdy', '', NULL, '2022-10-07 02:48:33', '2022-11-05 09:43:17');
+INSERT INTO `users` (`id`, `name`, `email`, `image`, `gender`, `phone`, `address`, `dob`, `role_id`, `email_verified_at`, `password`, `secret_key`, `remember_token`, `is_active`, `is_deleted`, `created_at`, `updated_at`) VALUES
+(1, 'Admin', 'admin@project.com', 'admin/assets/uploads/user/1659302696_1661179218.jpg', 'male', '(315) 253-5157', 'address', '2001-06-14', 1, NULL, '$2y$10$bWIihWLmugzT/wVvmBhZUOFhP3XuPubKwO6PdYIhzlcZQWqms/Fdy', '', NULL, 1, 0, '2022-10-07 02:48:33', '2022-11-05 09:43:17'),
+(5, 'Darpan Kumar', 'darpankhatri817@gmail.com', NULL, NULL, NULL, NULL, NULL, 1, '2022-11-26 05:22:25', '$2y$10$tGfvcMQO1QHt1ONLHT1UxOSyac/QYiaO3uqiJMiawk3UrD/58TbP2', 'a:2:{s:16:\"color_validation\";s:11:\"1,0,1,0,1,1\";s:7:\"key_cnt\";s:2:\"11\";}', NULL, 1, 0, '2022-11-26 05:21:15', '2022-11-26 05:22:25');
 
 --
 -- Indexes for dumped tables
@@ -270,7 +273,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

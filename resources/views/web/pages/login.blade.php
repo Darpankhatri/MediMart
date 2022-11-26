@@ -1,8 +1,12 @@
+<?php $favicon = App\Models\logo::where('name', 'favicon')
+    ->where('is_active', 1)
+    ->first();
+?>
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title> Home </title>
+    <title> Login | Graphical Validator </title>
     <meta charset="UTF-8">
     <meta name="keywords" content="HTML, CSS, JavaScript">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +15,7 @@
     <link href="{{ asset("web/css/bootstrap.min.css.map")}}" rel="stylesheet" type="text/css">
     <link href="{{ asset("web/css/animate.css")}}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <link rel="icon" href="{{ asset("web/images/fav-icon.png")}}" type="image/png" sizes="">
+    <link rel="icon" href="{{ asset($favicon->image)}}" type="image/png" sizes="">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.css">
     <link rel="stylesheet" href="{{ asset("web/css/owl.carousel.min.css")}}">
