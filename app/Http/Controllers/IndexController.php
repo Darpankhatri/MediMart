@@ -66,6 +66,36 @@ class IndexController extends Controller
         return redirect()->route('account.registerd',$req->email);
     }
 
+    public function user_login(Request $req)
+    {
+        // return $req;
+        $validate = Validator::make($req->all(), [
+
+            'email' =>'required|email',
+            'password' =>'required|min:10',
+            'color_validation'=> 'required'
+            
+        ]);
+
+        if ($validate->fails()) {
+            return back()->withErrors($validate->errors())->withInput();
+        }
+        
+        $token_ignore = ['_token' => '', 'name'=>'', 'email'=>'', 'password'=>''];
+        $post_feilds = array_diff_key($_POST , $token_ignore);
+        $secrate = serialize($post_feilds);
+
+        $user = User::where('email',$req->email)->first();
+        if($user){
+            if(Hash::check($req->password,$user->password) && $secrate == $user->secret_key){
+                Auth::loginUsingId($user->id);
+                
+                return redirect()->route('dashboard');
+            }
+        }
+        return back()->with('error','Invalid User or password');
+    }
+
     public function active_account(Request $req)
     {
 

@@ -25,17 +25,10 @@
     <link href="https://kit-pro.fontawesome.com/releases/v5.15.3/css/pro.min.css" rel="stylesheet">
     <link href="{{ asset('web/css/custom.css') }}" rel="stylesheet" type="text/css">
     {{-- toaster --}}
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <!-- Sweet Alert-->
     <link href="{{ asset('admin/assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
-    <style>
-        
-        .danger-msg {
-            color: red;
-            font-weight: bold;
-            display: flow-root;
-        }
-    </style>
 
     <!--=============== scripts  ===============-->
     <script src="{{ asset('web/js/jquery-3.6.0.min.js') }}"></script>
@@ -49,6 +42,7 @@
     <script src="{{ asset('web/js/custom.js') }}"></script>
     <script src="{{ asset('admin/assets/libs/sweetalert2/sweetalert2.all.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="{{ asset('web/validation.js') }}"></script>
 </head>
 
 <body>
@@ -77,18 +71,20 @@
                             </ul>
                         </div>
                     @endif
-                    <input type="name" placeholder="Enter Your Name" name="name" value="{{ old('name') }}" required>
-                    
-                    <input type="email" placeholder="Enter Your Email" name="email" value="{{ old('email') }}" required>
-                    
+                    <input type="name" placeholder="Enter Your Name" name="name" value="{{ old('name') }}"
+                        required>
+
+                    <input type="email" placeholder="Enter Your Email" name="email" value="{{ old('email') }}"
+                        required>
+
                     <input type="password" placeholder="Password" name="password" autocomplete="" required>
-                    
+
                     <div class="recover">
                         <i class="fas fa-sync-alt reset-set"></i>
                     </div>
-                    
+
                     <input id="channels-list-container" name="color_validation" type="text" />
-                    <input type="hidden" name="key_cnt" id="key_cnt"/>
+                    <input type="hidden" name="key_cnt" id="key_cnt" />
                     <div class="slect-options">
                         <ul>
                             <!-- opacity ki class h ye "cl-op" -->
@@ -101,7 +97,7 @@
                         </ul>
                     </div>
                 </form>
-                <button id="register-from-btn" >Sign Up</button>
+                <button id="register-from-btn">Sign Up</button>
 
 
                 <div class="not-member">
@@ -113,7 +109,9 @@
     </section>
 
     <!-- login section end -->
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> --}}
+
+
+
     <script>
         var key_cnt = 0;
         (function() {
@@ -122,9 +120,9 @@
 
             $(document).on('keydown', function(event) {
                 // Check if timer is already running.
-                
+
                 if (timer !== null) return;
-                
+
                 // Start new timer.
                 timer = window.setInterval(function() {
                     // Trigger longKeyPress event on the currently selected element when the timer finishes.
@@ -135,7 +133,7 @@
                         which: event.which
                     });
                 }, duration);
-                
+
             });
 
             $(document).on('keyup', function(event) {
@@ -153,109 +151,14 @@
             $('#channels-list-container').on('longKeyPress', function(event) {
                 if (event.key === "Enter") {
                     // console.log('Long [Enter] key press detected on targeted element!');
-                    
-                    
+
+
                     key_cnt += 1;
                 }
             });
         })();
-    </script>
 
-
-    <script>
-        var col_cnt = [0,0,0,0,0,0];
-        var msg = 'Fill All Required Fields';
-        function isEmail(email) {
-            var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-            return regex.test(email);
-        }
-
-        $(document).on('click','.btn-col',function() {
-            var cur_class = $(this).find('i').attr('class');
-            var ele = $(this);
-
-            if(cur_class){
-                cur_class = parseInt(cur_class.replace('col', '')) - 1;
-                col_cnt[cur_class]= 1;
-                
-                // console.log(col_cnt,cur_class,key_cnt);
-                // console.log($(this).find('i').length);
-
-
-                ele.removeClass('btn-col');
-            }
-            else{
-                location.reload();
-            }
-        });
-
-        $(document).on('click','#register-from-btn',function() {
-            var has_error = 0;
-            $('#key_cnt').val(key_cnt);
-            $('#register-form').find('input').each(function( index ) {
-                if($(this).attr('id')!='channels-list-container' && $(this).val() == ''){
-                    has_error +=1;
-                    return;
-                }
-                if($(this).attr('type') == 'email'){
-                    if(!isEmail($(this).val())){
-                        has_error += 1;
-                        msg = 'InValid Email!';
-                        return;
-                    }
-                }
-                if($(this).attr('type') == 'password' && $(this).val().length <10 && has_error == 0){
-                    
-                    has_error += 1;
-                    msg = 'Min Password Required 10 character!';
-                    return;
-                }
-                // console.log("here");
-            });
-
-            if(has_error == 0){
-                if(key_cnt == 0){
-
-                    msg = 'Long Press key validation!';
-                    has_error += 1;
-                }
-                else if(key_cnt<10){
-                    msg = 'Min Key Press required 10s';
-                    has_error += 1;
-                }
-                if(has_error == 0){
-                    var i;
-                    var lo_col_cnt = 0;
-                    for(i=0 ; i<col_cnt.length ; ++i){
-                        if(col_cnt[i] == ''){
-                            lo_col_cnt +=1;
-                        }
-                    }
-                    
-                    if(lo_col_cnt>3){
-                        msg = 'Color Validation Failed!';
-                        has_error += 1;
-
-                    }
-                }
-            }
-
-            if(has_error){
-                $('#key_cnt').val('');
-                Swal.fire({
-                    icon: 'error',
-                    title: msg,
-                })
-            }
-            else{
-                $('#channels-list-container').val(col_cnt);
-                $('#register-form').submit();
-                // toastr.success("Success");
-            }
-        });
-
-
-        $(document).on('click','.reset-set',function() {
+        $(document).on('click', '.reset-set', function() {
 
             $.ajax({
                 type: 'post',
@@ -271,7 +174,7 @@
                         "debug": false,
                         "positionClass": "toast-bottom-right",
                     }
-                    col_cnt = [0,0,0,0,0,0];
+                    col_cnt = [0, 0, 0, 0, 0, 0];
                     key_cnt = 0;
                     $('#channels-list-container').val('');
                     $('.slect-options').html(response.body);
@@ -279,7 +182,7 @@
                 }
             });
         });
-
+        
         @if (Session::has('error'))
             toastr.options = {
                 "closeButton": true,

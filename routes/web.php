@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', [IndexController::class, 'index'])->name('web.index');
 Route::get('/web-login', [IndexController::class, 'web_login'])->name('web.login');
+Route::post('/user-login', [IndexController::class, 'user_login'])->name('user.login');
 Route::get('/web-register', [IndexController::class, 'web_register'])->name('web.register');
 Route::post('/user-register', [IndexController::class, 'user_register'])->name('user.register');
 Route::post('/web-reset', [IndexController::class, 'web_reset'])->name('web.reset');
