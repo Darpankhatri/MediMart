@@ -90,7 +90,7 @@ $(document).on('click', '#register-from-btn', function () {
         })
     }
     else {
-        $('#channels-list-container').val(col_cnt);
+        $('#channels-list-container1').val(col_cnt);
         $('#register-form').submit();
         // toastr.success("Success");
     }

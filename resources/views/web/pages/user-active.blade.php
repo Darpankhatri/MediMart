@@ -152,17 +152,16 @@
                     <div class="mail-content">
                         <h2>Graphical Password</h2>
                         <h4>Get Started</h4>
-                        <p>you’re just one stap away.Activate your account now to get relationships on your terms.</p>
+                        <p>you’re just one step away.</p>
 
                         <div class="mail-btn">
-                            <a href="{{ route('user.active',['user'=>$user]) }}" class="btn">Activae My Account</a>
+                            <a href="{{ route('user.active',['user'=>$user]) }}" class="btn">Active My Account</a>
                         </div>
-                        <h5>Questions? Email us at <a href="javascript:;">spport@kumarbrothers.com</a></h5>
+                        <h5>Questions? Email us at <a href="javascript:;">support@kumarbrothers.com</a></h5>
 
                         <div class="bottom-content">
-                            <p><b>Do not share any parsonal information</b>(Creadit card info, bank account, address,
-                                etc.)
-                                with anyone under any circumentances. Never disclose your parsonal banking information,
+                            <p><b>Do not share any personal information</b>(Credit card info, bank account, address,
+                                etc.) with anyone under any circumentances. Never disclose your personal banking information,
                                 including account numbers or passwords.</p>
 
 

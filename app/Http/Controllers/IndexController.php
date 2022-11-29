@@ -58,7 +58,7 @@ class IndexController extends Controller
             
             Mail::send('web.pages.user-active',['user'=>Crypt::encrypt($user->id)],function($message) use($user){
                 $message->to($user->email);
-                $message->subject("Actime Your Account");
+                $message->subject("Active Your Account");
             });
         }catch(\Exception $e){
             return back()->with('error',$e->getMessage());
