@@ -27,7 +27,7 @@ class IndexController extends Controller
 
     public function user_register(Request $req)
     {
-        // return $req;
+        return $req;
         $validate = Validator::make($req->all(), [
 
             'name' => 'required',

@@ -84,7 +84,10 @@
                     </div>
 
                     <input id="channels-list-container" name="color_val" type="text" />
-                    <input id="channels-list-container1" name="color_validation" type="text" />
+                    <div>
+                        1
+                    </div>
+                    <input id="channels-list-container1" name="color_validation" type="hidden" />
                     <input type="hidden" name="key_cnt" id="key_cnt" />
                     <div class="slect-options">
                         <ul>
