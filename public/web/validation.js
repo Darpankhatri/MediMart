@@ -33,24 +33,44 @@ $(document).on('click', '.btn-col', function () {
 
 $(document).on('click', '#register-from-btn', function () {
     var has_error = 0;
+    $('#channels-list-container1').val(col_cnt);
     $('#key_cnt').val(key_cnt);
     $('#register-form').find('input').each(function (index) {
-        if ($(this).attr('id') != 'channels-list-container' && $(this).val() == '') {
-            has_error += 1;
-            return;
-        }
-        if ($(this).attr('type') == 'email') {
-            if (!isEmail($(this).val())) {
+        if ($(this).attr('id') != 'channels-list-container') {
+            console.log($(this).attr('id'));
+            if($(this).val() == ''){
+
                 has_error += 1;
-                msg = 'InValid Email!';
+                console.log("here1");
                 return;
             }
-        }
-        if ($(this).attr('type') == 'password' && $(this).val().length < 10 && has_error == 0) {
+            if ($(this).attr('type') == 'email') {
+                if (!isEmail($(this).val())) {
+                    has_error += 1;
+                    msg = 'InValid Email!';
+                    return;
+                }
+            }
+            if ($(this).attr('type') == 'password' && has_error == 0) {
 
-            has_error += 1;
-            msg = 'Min Password Required 10 character!';
-            return;
+                var mulpass = $(this).val().length < 9;
+                if(mulpass){
+                    has_error += 1;
+                    msg = 'Min Password Required 9 character!';
+                    return;
+                }
+                var pass_mul = parseInt($(this).val().length);
+                var check_pass_mul = pass_mul%3;
+                console.log("pass" + check_pass_mul);
+                if(check_pass_mul != 0){
+                    console.log($(this).val().length);
+    
+                    has_error += 1;
+                    msg = 'Password Not multipul of 3!';
+                    return;
+                }
+                
+            }
         }
         // console.log("here");
     });
@@ -61,8 +81,8 @@ $(document).on('click', '#register-from-btn', function () {
             msg = 'Long Press key validation!';
             has_error += 1;
         }
-        else if (key_cnt < 10) {
-            msg = 'Min Key Press required 10s';
+        else if (key_cnt < 5) {
+            msg = 'Min Key Press required 5s';
             has_error += 1;
         }
         if (has_error == 0) {
@@ -74,7 +94,7 @@ $(document).on('click', '#register-from-btn', function () {
                 }
             }
 
-            if (lo_col_cnt > 3) {
+            if (lo_col_cnt > 4) {
                 msg = 'Color Validation Failed!';
                 has_error += 1;
 
@@ -88,9 +108,10 @@ $(document).on('click', '#register-from-btn', function () {
             icon: 'error',
             title: msg,
         })
+        $('#channels-list-container1').val('');
     }
     else {
-        $('#channels-list-container1').val(col_cnt);
+        
         $('#register-form').submit();
         // toastr.success("Success");
     }

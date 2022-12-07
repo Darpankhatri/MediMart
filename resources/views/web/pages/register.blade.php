@@ -71,22 +71,20 @@
                             </ul>
                         </div>
                     @endif
-                    <input type="name" placeholder="Enter Your Name" name="name" value="{{ old('name') }}"
+                    <input type="name" placeholder="Enter Your Name" id="name" name="name" value="{{ old('name') }}"
                         required>
 
-                    <input type="email" placeholder="Enter Your Email" name="email" value="{{ old('email') }}"
+                    <input type="email" placeholder="Enter Your Email" id="email" name="email" value="{{ old('email') }}"
                         required>
 
-                    <input type="password" placeholder="Password" name="password" autocomplete="" required>
+                    <input type="password" placeholder="Password" id="password" name="password" autocomplete="" required>
 
                     <div class="recover">
                         <i class="fas fa-sync-alt reset-set"></i>
                     </div>
 
                     <input id="channels-list-container" name="color_val" type="text" />
-                    <div>
-                        1
-                    </div>
+                    
                     <input id="channels-list-container1" name="color_validation" type="hidden" />
                     <input type="hidden" name="key_cnt" id="key_cnt" />
                     <div class="slect-options">
@@ -122,7 +120,7 @@
             var duration = 1000,
                 timer = null;
 
-            $(document).on('keydown', function(event) {
+            $(document).on('keydown','#channels-list-container', function(event) {
                 // Check if timer is already running.
 
                 if (timer !== null) return;
@@ -140,12 +138,21 @@
 
             });
 
-            $(document).on('keyup', function(event) {
+            $(document).on('keyup','#channels-list-container', function(event) {
                 if (timer === null) return;
 
                 // Clear running timer.
                 window.clearTimeout(timer);
                 timer = null;
+                if(key_cnt != 0){
+                    toastr.options = {
+                        "closeButton": true,
+                        "progressBar": true,
+                        "debug": false,
+                        "positionClass": "toast-bottom-right",
+                    }
+                    toastr.info("Press Key Sec count: " + key_cnt);
+                }
             });
         })();
 
@@ -154,9 +161,6 @@
             // Bind to custom longKeyPress event.
             $('#channels-list-container').on('longKeyPress', function(event) {
                 if (event.key === "Enter") {
-                    // console.log('Long [Enter] key press detected on targeted element!');
-
-
                     key_cnt += 1;
                 }
             });

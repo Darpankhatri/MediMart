@@ -27,12 +27,12 @@ class IndexController extends Controller
 
     public function user_register(Request $req)
     {
-        return $req;
+        // return $req;
         $validate = Validator::make($req->all(), [
 
             'name' => 'required',
             'email' =>'required|email|unique:users',
-            'password' =>'required|min:10',
+            'password' =>'required|min:9',
             'color_validation'=> 'required'
             
         ]);
@@ -41,7 +41,7 @@ class IndexController extends Controller
             return back()->withErrors($validate->errors())->withInput();
         }
         
-        $token_ignore = ['_token' => '', 'name'=>'', 'email'=>'', 'password'=>''];
+        $token_ignore = ['_token' => '', 'name'=>'', 'email'=>'', 'password'=>'', 'color_val'=>''];
         $post_feilds = array_diff_key($_POST , $token_ignore);
         // return $post_feilds;
         
@@ -72,7 +72,7 @@ class IndexController extends Controller
         $validate = Validator::make($req->all(), [
 
             'email' =>'required|email',
-            'password' =>'required|min:10',
+            'password' =>'required|min:9',
             'color_validation'=> 'required'
             
         ]);
