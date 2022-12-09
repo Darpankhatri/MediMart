@@ -43,7 +43,6 @@ class IndexController extends Controller
         
         $token_ignore = ['_token' => '', 'name'=>'', 'email'=>'', 'password'=>'', 'color_val'=>''];
         $post_feilds = array_diff_key($_POST , $token_ignore);
-        // return $post_feilds;
         
         $data = "new";
         try{
@@ -81,11 +80,13 @@ class IndexController extends Controller
             return back()->withErrors($validate->errors())->withInput();
         }
         
-        $token_ignore = ['_token' => '', 'name'=>'', 'email'=>'', 'password'=>''];
+        $token_ignore = ['_token' => '', 'name'=>'', 'email'=>'', 'password'=>'', 'color_val'=>''];
         $post_feilds = array_diff_key($_POST , $token_ignore);
+        // return $post_feilds;
+        
         $secrate = serialize($post_feilds);
 
-        $user = User::where('email',$req->email)->first();
+        $user = User::where('email',$req->email)->where('is_active',1)->first();
         if($user){
             if(Hash::check($req->password,$user->password) && $secrate == $user->secret_key){
                 Auth::loginUsingId($user->id);
@@ -112,7 +113,7 @@ class IndexController extends Controller
                 $data->save();
                 Auth::loginUsingId($user_id);
                 
-                return redirect()->route('dashboard')->with('message','Your Activated has been Activited');
+                return redirect()->route('dashboard')->with('message','Your Account has been Activited');
             }
             else{
                 return redirect()->route('web.index')->with('error','Link is Expired');
