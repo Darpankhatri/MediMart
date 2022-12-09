@@ -29,6 +29,8 @@ Route::post('/user-register', [IndexController::class, 'user_register'])->name('
 Route::post('/web-reset', [IndexController::class, 'web_reset'])->name('web.reset');
 Route::get('/account-registerd/{email}', [IndexController::class, 'account_registerd'])->name('account.registerd');
 Route::get('/user-active-account', [IndexController::class, 'active_account'])->name('user.active');
+Route::get('/active-account', [IndexController::class, 'active_account_page'])->name('user.active.page');
+Route::post('/active-account-send', [IndexController::class, 'active_account_send'])->name('user.active.send');
 
 
 Route::group(['middleware' => 'IsAdmin'], function()

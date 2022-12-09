@@ -86,12 +86,43 @@ class IndexController extends Controller
         
         $secrate = serialize($post_feilds);
 
-        $user = User::where('email',$req->email)->where('is_active',1)->first();
+        $user = User::where('email',$req->email)->first();
         if($user){
+            
+            if($user->is_blocked == 1){
+                
+                return redirect()->route('user.active.page')->with("error",'Your Account Is blocked');
+            }
+
+            else if($user->is_active == 0){
+                
+                return redirect()->route('user.active.page')->with("error",'Your Account Is Not Active');
+            }
             if(Hash::check($req->password,$user->password) && $secrate == $user->secret_key){
                 Auth::loginUsingId($user->id);
                 
                 return redirect()->route('dashboard');
+            }
+            else{
+
+                $mytime = \Carbon\Carbon::now()->subMinutes(2);
+                if($user->updated_at >= $mytime){
+                    $user->log_try +=1;
+                    $user->save();
+
+                    if($user->log_try == 3){
+                        $user->is_blocked = 1;
+                        $user->is_active = 0;
+                        $user->save();
+                        return redirect()->route('web.login')->with("error",'Your Account Is blocked');
+                        
+                    }
+                }
+                else{
+                    $user->log_try = 1;
+                    $user->save();
+                    
+                }
             }
         }
         return back()->with('error','Invalid User or password');
@@ -108,6 +139,8 @@ class IndexController extends Controller
             if($data->updated_at >= $mytime){
                 // return "yes";
                 $data->is_active = 1;
+                $data->is_blocked = 0;
+                $data->log_try = 0;
                 $data->email_verified_at = \Carbon\Carbon::now();
                 
                 $data->save();
@@ -149,5 +182,39 @@ class IndexController extends Controller
             <li class="btn-col"><i class="col6"></i></li>
         </ul>';
         return response()->json(['body'=> $body]);
+    }
+
+    public function active_account_page()
+    {
+        return view('web.pages.active_acc');
+    }
+
+    public function active_account_send(Request $req)
+    {
+        $validate = Validator::make($req->all(), [
+
+            'email' =>'required|email',
+            
+        ]);
+
+        if ($validate->fails()) {
+            return back()->withErrors($validate->errors())->withInput();
+        }
+        
+        $user = User::where('email',$req->email)->where('is_active',0)->first();
+
+
+        if($user){
+            
+            Mail::send('web.pages.user-active',['user'=>Crypt::encrypt($user->id)],function($message) use($user){
+                $message->to($user->email);
+                $message->subject("Active Your Account");
+            });
+            return redirect()->route('account.registerd',$req->email);
+        }
+        else{
+            
+            return redirect()->route('web.login')->with('error','Account is Already Active');
+        }
     }
 }

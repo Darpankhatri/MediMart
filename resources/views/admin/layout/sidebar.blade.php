@@ -16,57 +16,6 @@
                     </a>
                 </li>
 
-                <li class="menu-title mt-2">Apps</li>
-                @if (Auth::user()->role_id == 1)
-                    <li>
-                        <a href="{{ route('product') }}">
-                            <i class="fe-shopping-cart"></i>
-                            <span> Product </span>
-                        </a>
-                    </li>
-                @endif
-
-                {{-- <li>
-                    <a href="#sidebarEmail" data-bs-toggle="collapse">
-                        <i class="fe-mail"></i>
-                        <span> Email </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="sidebarEmail">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="email-inbox.html">Inbox</a>
-                            </li>
-                            <li>
-                                <a href="email-read.html">Read Email</a>
-                            </li>
-                            <li>
-                                <a href="email-compose.html">Compose Email</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li> --}}
-
-
-                <li class="menu-title mt-2">Web Apps</li>
-                <li>
-                    <a href="#webconfig" data-bs-toggle="collapse">
-                        <i class="fe-settings"></i>
-                        <span> Website Setting </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="webconfig">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('web.config') }}">Config</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('web.logo') }}">Logo</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
                 
             </ul>
 
