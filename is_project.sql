@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 09, 2022 at 07:07 AM
+-- Generation Time: Jan 29, 2023 at 09:59 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -192,7 +192,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `image`, `gender`, `phone`, `address
 (9, 'check', 'check@gmail.com', NULL, NULL, NULL, NULL, NULL, 1, '2022-12-06 23:20:23', '$2y$10$bbl4ohbqiEHAUTFJtAylC.ziOOBLu31huzVavzvq5WgtFWku6LQbe', 'a:2:{s:16:\"color_validation\";s:11:\"0,0,1,1,0,1\";s:7:\"key_cnt\";s:1:\"7\";}', NULL, 1, 0, 0, 0, '2022-12-06 23:20:13', '2022-12-06 23:20:23'),
 (10, 'Darpan Kumar', 'asdf@gmail.com', NULL, NULL, NULL, NULL, NULL, 1, '2022-12-08 02:11:25', '$2y$10$7jVEqUP/tuGrFl6Gn2PiheT0F88AA6mlCAfZ2MaLoZg6IDeOe.QzC', 'a:2:{s:16:\"color_validation\";s:11:\"1,0,0,0,0,1\";s:7:\"key_cnt\";s:1:\"5\";}', NULL, 1, 0, 0, 0, '2022-12-08 02:11:03', '2022-12-08 02:11:25'),
 (11, 'om', 'om@gmail.com', NULL, NULL, NULL, NULL, NULL, 1, '2022-12-08 11:23:57', '$2y$10$GkG5kN7VazgdoTx2UVcihOwinM50uZ5I1DFtrymOW/dl74uVJX3Vm', 'a:2:{s:16:\"color_validation\";s:11:\"1,0,0,0,0,1\";s:7:\"key_cnt\";s:1:\"5\";}', NULL, 1, 0, 0, 0, '2022-12-08 11:23:02', '2022-12-08 11:23:57'),
-(12, 'vinay', 'vinay@gmail.com', NULL, NULL, NULL, NULL, NULL, 1, '2022-12-09 00:58:10', '$2y$10$nkzp1hD87wkU8B8FyMEPgeu.R3Ajihas1Wy4k7K2JxvHpxk9KFQAq', 'a:2:{s:16:\"color_validation\";s:11:\"1,1,0,0,0,0\";s:7:\"key_cnt\";s:1:\"6\";}', NULL, 1, 0, 0, 3, '2022-12-08 12:08:57', '2022-12-09 00:58:10');
+(12, 'vinay', 'vinay@gmail.com', NULL, NULL, NULL, NULL, NULL, 1, '2022-12-09 00:58:10', '$2y$10$nkzp1hD87wkU8B8FyMEPgeu.R3Ajihas1Wy4k7K2JxvHpxk9KFQAq', 'a:2:{s:16:\"color_validation\";s:11:\"1,1,0,0,0,0\";s:7:\"key_cnt\";s:1:\"6\";}', NULL, 1, 0, 0, 3, '2022-12-08 12:08:57', '2022-12-09 00:58:10'),
+(13, 'new1', 'new1@gmail.com', NULL, NULL, NULL, NULL, NULL, 1, '2022-12-09 01:39:49', '$2y$10$rndyJkfnahuqpdJioumXg.PHOWGt3DgGFOCwGgevg.ZF.Pw3R8JKu', 'a:2:{s:16:\"color_validation\";s:11:\"1,1,0,0,0,0\";s:7:\"key_cnt\";s:1:\"5\";}', NULL, 1, 0, 0, 0, '2022-12-09 01:39:17', '2022-12-09 01:39:49');
 
 --
 -- Indexes for dumped tables
@@ -280,7 +281,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
